@@ -95,6 +95,12 @@ out:
 	return rc;
 }
 
+
+static inline int mls_context_glblub(struct context *dst, struct context *c1, struct context *c2)
+{
+	return mls_range_glblub(&dst->range, &c1->range, &c2->range);
+}
+
 static inline int mls_context_cmp(struct context *c1, struct context *c2)
 {
 	return ((c1->range.level[0].sens == c2->range.level[0].sens) &&

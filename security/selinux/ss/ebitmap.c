@@ -77,6 +77,21 @@ int ebitmap_cpy(struct ebitmap *dst, struct ebitmap *src)
 	return 0;
 }
 
+int ebitmap_and(struct ebitmap *dst, struct ebitmap *e1, struct ebitmap *e2)
+{
+	unsigned int i, length = min(ebitmap_length(e1), ebitmap_length(e2));
+	ebitmap_init(dst);
+	for (i=0; i < length; i++) {
+		if (ebitmap_get_bit(e1, i) && ebitmap_get_bit(e2, i)) {
+			int rc = ebitmap_set_bit(dst, i, 1);
+			if (rc < 0)
+				return rc;
+		}
+	}
+	return 0;
+}
+
+
 #ifdef CONFIG_NETLABEL
 /**
  * ebitmap_netlbl_export - Export an ebitmap into a NetLabel category bitmap
